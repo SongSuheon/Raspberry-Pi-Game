@@ -1,6 +1,6 @@
 # embedded_sw_project
 
-## version 2
+## version 2 6/3 ~ 6.4
 ### 개선한 점
 1. 변수 줄이기
 2. 함수 하나에 하나의 기능
