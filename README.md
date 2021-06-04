@@ -1,6 +1,7 @@
 # embedded_sw_project
 
 ## version 2
+### 개선한 점
 1. 변수 줄이기
 2. 함수 하나에 하나의 기능
 3. camelcase -> snakecase
