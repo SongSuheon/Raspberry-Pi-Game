@@ -110,7 +110,7 @@ class enemy:
         self.x = x 
         self.y = 7
         self.radius = self.y
-        self.color = '#FFFFFF'
+        self.color = '#FFFFFF' # defualt color is white
         self.speed = 5
                 
     def draw(self):
@@ -124,20 +124,22 @@ def clear_all():
     draw.rectangle((0, 0, width, height), outline=0, fill=0)
 
 # not yet
-def crash(e, o): # enemy, object 
+"""def crash(e, o): # enemy, object 
     if math.sqrt( (e.x - o.x)**2 + (e.x - o.y)**2 ) < e.radius + o.radius:
         return True
  
     else: 
         return False
 
- 
+def effect():
+    return"""
 
 c = circle()
-magazine  = [] # house of bullet
+
+bullets  = [] # list of bullet
 num_of_bullet = 0
 
-enemies = []
+enemies = [] # list of enemy
 num_of_enemy = 0
 
 while True:
@@ -185,38 +187,60 @@ while True:
 
     if not button_A.value: # fire a bullet
        b = bullet(c.x, c.y, c.radius)
-       magazine.append(b)
+       bullets.append(b)
        num_of_bullet += 1
     
     elif not button_B.value: # fire two bullets
        b1 = bullet(c.x - 5, c.y, c.radius)
        b1.color = "#0000AA"
-       magazine.append(b1)
+       bullets.append(b1)
        b2 = bullet(c.x + 5, c.y, c.radius)
        b2.color = "#0000AA"
-       magazine.append(b2)
+       bullets.append(b2)
        num_of_bullet += 2
     
     rm_b_list = [] # bullet to remove
     rm_b_num = 0 # number of bullet to remove
 
     for i in range(num_of_bullet):
-        if magazine[i].y - magazine[i].speed  < -magazine[i].height:
+        if bullets[i].y - bullets[i].speed  < -bullets[i].height:
             rm_b_list.append(i)
             rm_b_num += 1
             continue
         else:
-            magazine[i].y -= magazine[i].speed
-            magazine[i].draw()
+            bullets[i].y -= bullets[i].speed
+            bullets[i].draw()
 
             
     for i in range(rm_b_num-1, -1, -1):
-            del magazine[rm_b_list[i]]
+            del bullets[rm_b_list[i]]
             num_of_bullet -= 1
 
 
     # crash
-            
+    """rm_e_list = []
+    rm_e_num = 0
+    rm_b_list = []
+    rm_b_num = 0
+
+    for i in range(num_of_enemy):
+        for j in range(num_of_bullet):
+            if crash(enemies[i], bull):
+                rm_e_list.append(i)
+                rm_e_num += 1
+                rm_b_list.append(i)
+                rm_b_num += 1
+    
+    rm_e_list.sort()
+    rm_b_list.sort()
+                
+    for i in range(rm_e_num-1, -1, -1):
+        del bullets[i]
+        num_of_bullet -= 1
+        
+    for i in range(rm_b_num-1, -1, -1):
+        del enemies[i]
+        num_of_enemy -= 1"""
 
     disp.image(image)
     time.sleep(0.02)
