@@ -1,5 +1,6 @@
 import time
 import random
+import math
 from colorsys import hsv_to_rgb
 import board
 from digitalio import DigitalInOut, Direction
@@ -64,119 +65,182 @@ draw = ImageDraw.Draw(image)
 draw.rectangle((0, 0, width, height), outline=0, fill=(255, 0, 0))
 disp.image(image)
 
-#fnt = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 30)
+fnt = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 30)
 
-#state of circle
-circle_diameter = 20
-circle_mvt = 15
+class circle:
+    def __init__(self):
+        self.x = 120 
+        self.y = 180
+        self.radius = 10
+        self.color = '#FF0000' #default color is red
+        self.speed = 10
 
-circle_x1 = (width / 2) - (circle_diameter / 2)
-circle_y1 = (height / 2) - (circle_diameter / 2)
-circle_x2 = (width / 2) + (circle_diameter / 2)
-circle_y2 = (height / 2) + (circle_diameter/ 2)
+    def move(self, direction):
+        
+        global width, height
+        
+        if direction == 'left' and self.x - self.radius - self.speed >=0:
+            self.x -= self.speed
+        elif direction == 'right' and  self.x + self.radius + self.speed <= width:
+            self.x += self.speed
+        elif direction == 'up' and self.y - self.radius - self.speed >=0:
+            self.y -= self.speed    
+        elif direction == 'down'and self.y + self.radius + self.speed <= height:
+            self.y += self.speed
+                
+    def draw(self):
+        draw.arc([(self.x - self.radius, self.y - self.radius),(self.x + self.radius, self.y + self.radius)],
+            0,360,fill=self.color, width=10)
 
-#state of bullet
-width_of_bullet = 8.5
-height_of_bullet = 5
-bullet_speed = 20
+class bullet:
+    def __init__(self, x, y, r):  #  x-axis of center, y-axis of center , radius of circle
+        self.width = 5
+        self.height = 9
+        self.speed = 30
+        self.x = x - (self.width / 2)
+        self.y = y - r - self.height + (self.speed - 10)
+        self.color = '#00FF00' # default color is green
+        
+    def draw(self):
+         draw.rectangle((self.x, self.y, 
+            self.x + self.width , self.y + self.height), outline=self.color, fill=self.color, width=2)
 
-front_bullet_x = circle_x1 - width_of_bullet
-front_bullet_y = (circle_y1 + circle_y2) / 2 - (height_of_bullet / 2)
-rear_bullet_x = circle_x2
-rear_bullet_y = (circle_y1 + circle_y2) / 2 - (height_of_bullet / 2)
+class enemy:
+    def __init__(self, x):
+        self.x = x 
+        self.y = 7
+        self.radius = self.y
+        self.color = '#FFFFFF' # defualt color is white
+        self.speed = 5
+                
+    def draw(self):
+        
+        draw.arc([(self.x - self.radius, self.y - self.radius),(self.x + self.radius, self.y + self.radius)],
+            0,360,fill=self.color, width=10)
 
 
-#function of circle
-def drawCircle():
-    global circle_x1, circle_y1, circle_x2, circle_y2, circle_diameter, width, height
-
+def clear_all():
     draw = ImageDraw.Draw(image)
     draw.rectangle((0, 0, width, height), outline=0, fill=0)
-    draw.arc([(circle_x1, circle_y1),(circle_x2, circle_y2)],0,360,fill='red', width=10)
 
-def moveCircle(x_mvt, y_mvt):
-    global circle_x1, circle_y1, circle_x2, circle_y2, circle_diameter,circle_mvt, width, height
+# not yet
+"""def crash(e, o): # enemy, object 
+    if math.sqrt( (e.x - o.x)**2 + (e.x - o.y)**2 ) < e.radius + o.radius:
+        return True
+ 
+    else: 
+        return False
 
-    if ((circle_x1 + x_mvt >= 0 and circle_x1 + x_mvt <= width - circle_diameter)
-        and (circle_y1 + y_mvt >= 0 and circle_y1 + y_mvt <= height - circle_diameter)):
-        circle_x1 += x_mvt; circle_x2 += x_mvt;
-        circle_y1 += y_mvt; circle_y2 += y_mvt;
+def effect():
+    return"""
 
+c = circle()
 
-#function of bullet
-def shootFrontBulletAt(front_bullet_x, front_bullet_y):
-    global  width_of_bullet, height_of_bullet, bullet_speed, circle_mvt
+bullets  = [] # list of bullet
+num_of_bullet = 0
 
-    while(front_bullet_x > 0):
-        if not button_U.value:
-            moveCircle(0,-circle_mvt)
-
-        if not button_D.value:
-            moveCircle(0,circle_mvt)
-        
-        if not button_L.value:
-            moveCircle(-circle_mvt,0)
-
-        if not button_R.value:
-            moveCircle(circle_mvt,0)
-
-        drawCircle()
-        draw.rectangle((front_bullet_x, front_bullet_y, 
-            front_bullet_x - width_of_bullet , front_bullet_y + height_of_bullet), outline='blue', fill='blue', width=2)
-        disp.image(image)
-        front_bullet_x -= bullet_speed
-        
-def shootRearBulletAt(rear_bullet_x, rear_bullet_y):
-    global  width_of_bullet, height_of_bullet, bullet_speed, circle_mvt
-
-    while(rear_bullet_x < width):
-        if not button_U.value:
-            moveCircle(0,-circle_mvt)
-
-        if not button_D.value:
-            moveCircle(0,circle_mvt)
-        
-        if not button_L.value:
-            moveCircle(-circle_mvt,0)
-
-        if not button_R.value:
-            moveCircle(circle_mvt,0)
-
-        drawCircle()
-        draw.rectangle((rear_bullet_x, rear_bullet_y, 
-            rear_bullet_x + width_of_bullet , rear_bullet_y + height_of_bullet), outline='blue', fill='blue', width=2)
-        disp.image(image)
-        rear_bullet_x += bullet_speed
-
+enemies = [] # list of enemy
+num_of_enemy = 0
 
 while True:
-    drawCircle()
-    front_bullet_x = circle_x1 - width_of_bullet
-    front_bullet_y = (circle_y1 + circle_y2) / 2 - (height_of_bullet / 2)
-    rear_bullet_x = circle_x2
-    rear_bullet_y = (circle_y1 + circle_y2) / 2 - (height_of_bullet / 2)
-    
-    if not button_U.value:
-        moveCircle(0,-circle_mvt)
-        drawCircle()
+    clear_all()
 
-    if not button_D.value:
-        moveCircle(0,circle_mvt)
-        drawCircle()
+    # circle
+
+    if not button_U.value: 
+       c.move('up')
+    elif not button_D.value:
+       c.move('down')         
+    elif not button_L.value:
+       c.move('left') 
+    elif not button_R.value:
+       c.move('right')
+    
+    c.draw()
+
+    # enemy
+
+    rate = 10
+    if random.randint(1, 100) <= rate:
+        e = enemy(random.randrange(7, width - 7))
+        enemies.append(e)
+        num_of_enemy += 1
+
+    rm_e_list = [] # enemy to remove
+    rm_e_num = 0 # number of enemy to remove
+
+    for i in range(num_of_enemy):
+        if enemies[i].y + enemies[i].speed  >= height :
+            rm_e_list.append(i)
+            rm_e_num += 1
+            continue
+ 
+        else:
+            enemies[i].y += enemies[i].speed
+            enemies[i].draw()
+    
+    for i in range(rm_e_num-1, -1, -1):
+            del enemies[rm_e_list[i]]
+            num_of_enemy -= 1
+
+    # bullet
+
+    if not button_A.value: # fire a bullet
+       b = bullet(c.x, c.y, c.radius)
+       bullets.append(b)
+       num_of_bullet += 1
+    
+    elif not button_B.value: # fire two bullets
+       b1 = bullet(c.x - 5, c.y, c.radius)
+       b1.color = "#0000AA"
+       bullets.append(b1)
+       b2 = bullet(c.x + 5, c.y, c.radius)
+       b2.color = "#0000AA"
+       bullets.append(b2)
+       num_of_bullet += 2
+    
+    rm_b_list = [] # bullet to remove
+    rm_b_num = 0 # number of bullet to remove
+
+    for i in range(num_of_bullet):
+        if bullets[i].y - bullets[i].speed  < -bullets[i].height:
+            rm_b_list.append(i)
+            rm_b_num += 1
+            continue
+        else:
+            bullets[i].y -= bullets[i].speed
+            bullets[i].draw()
+
+            
+    for i in range(rm_b_num-1, -1, -1):
+            del bullets[rm_b_list[i]]
+            num_of_bullet -= 1
+
+
+    # crash
+    """rm_e_list = []
+    rm_e_num = 0
+    rm_b_list = []
+    rm_b_num = 0
+
+    for i in range(num_of_enemy):
+        for j in range(num_of_bullet):
+            if crash(enemies[i], bull):
+                rm_e_list.append(i)
+                rm_e_num += 1
+                rm_b_list.append(i)
+                rm_b_num += 1
+    
+    rm_e_list.sort()
+    rm_b_list.sort()
+                
+    for i in range(rm_e_num-1, -1, -1):
+        del bullets[i]
+        num_of_bullet -= 1
         
-    if not button_L.value:
-        moveCircle(-circle_mvt,0)
-        drawCircle()
-
-    if not button_R.value:
-        moveCircle(circle_mvt,0)
-        drawCircle()
-    
-    if not button_A.value:
-        shootRearBulletAt(rear_bullet_x, rear_bullet_y)
-
-    if not button_B.value:
-        shootFrontBulletAt(front_bullet_x, front_bullet_y)
+    for i in range(rm_b_num-1, -1, -1):
+        del enemies[i]
+        num_of_enemy -= 1"""
 
     disp.image(image)
-
+    time.sleep(0.02)
