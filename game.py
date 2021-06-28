@@ -141,7 +141,7 @@ def show_ingame_screen():
                 h.is_jump = True
         if not button_B.value: # shoot
             x = h.x + h.width
-            y = h.y + 50
+            y = h.y + 40
             m.append(x, y)
                 
         if h.is_jump == True:

@@ -9,7 +9,7 @@ class Tweet:
         self.height = 20
         self.x = x
         self.y = y
-        self.dx = 10
+        self.dx = 20 # x-axis speed of tweet
     def right(self):
         if self.x + self.dx <= 240:
             self.x += self.dx
@@ -34,6 +34,7 @@ class TweetList:
             i.draw(canvas)
     def remove(self):
         for i in self.rm_list:
-            self.tweet_list.remove(i)
+            if i in self.tweet_list:
+                self.tweet_list.remove(i)
         self.rm_list.clear()
 

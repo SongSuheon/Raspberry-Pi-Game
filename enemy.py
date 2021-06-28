@@ -9,8 +9,8 @@ wendy = Image.open("./image/wendy.png").convert("RGBA")
 
 img_list = [cartman, kenny, kyle, stan, wendy]
 
-WIDTH = 240 # width of monitor
-HEIGHT = 240 # height of monitor
+WIDTH = 240 # width of screen
+HEIGHT = 240 # height of screen
         
 class Enemy:
     def __init__(self):

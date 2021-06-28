@@ -2,6 +2,7 @@ from PIL import Image
 
 GRAVITY = 15
 GROUND = 240
+WIDTH = 240 # width of screen
 
 musk_img = Image.open("./image/elonmusk.png")
 musk_img = musk_img.resize((40, 80))
@@ -19,7 +20,7 @@ class ElonMusk:
         if self.x - self.dx >= 0:
             self.x -= self.dx
     def right(self):
-         if self.x + self.dx <= 240:
+         if self.x + self.dx <= WIDTH:
             self.x += self.dx
     def jump(self):
         if self.is_jump == True:

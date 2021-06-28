@@ -3,6 +3,8 @@ import random
 
 doge = Image.open("./image/doge.png").convert("RGBA")
 doge = doge.resize((25, 25))
+
+WIDTH = 240
         
 class Doge:
     def __init__(self,x):
@@ -23,13 +25,13 @@ class DogeList:
         self.rate = 10 # appearing rate
     def append(self):
         if random.randint(1, 101) <= self.rate:
-            x = random.randrange(0, 240 - 25 + 1)
+            x = random.randrange(0, WIDTH - 24)
             doge = Doge(x)
             self.doge_list.append(doge)
     def move(self):
         for i in self.doge_list:
             i.down()
-            if i.y > 240:
+            if i.y > WIDTH:
                 self.rm_list.append(i)
     def draw(self, canvas):
         for i in self.doge_list:
