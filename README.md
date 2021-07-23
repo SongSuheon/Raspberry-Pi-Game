@@ -1,6 +1,7 @@
 # embedded_sw_project
 
 파이썬을 사용해 Adafruit 1.3" Color TFT Bonnet for Raspberry Pi에서 작동하는 게임 만들기
+플레이 영상 : youtube.com/watch?v=M_NosdPnc04
 
 # 게임 이름 : Doge TO The Mars
 ## 게임 소개
