@@ -1,4 +1,4 @@
-# embedded_sw_project
+# Raspberry-Pi-Game
 
 파이썬을 사용해 Adafruit 1.3" Color TFT Bonnet for Raspberry Pi에서 작동하는 게임 만들기 </br>
 
