@@ -1,9 +1,9 @@
 # Raspberry-Pi-Game
-
 파이썬을 사용해 Adafruit 1.3" Color TFT Bonnet for Raspberry Pi에서 작동하는 게임 만들기 </br>
 플레이 동영상 [[link](https://youtube.com/watch?v=M_NosdPnc04)]
 
 # 게임 이름 : Doge TO The Mars
+<img src="https://user-images.githubusercontent.com/83093525/156487972-6b07fee8-566b-418f-b331-05a29c01fed8.jpg"</a>&nbsp;  
 ## 게임 소개
 플레이어가 일론머스크가 되어 도지코인에 투자했던 개미들이 탈출을 시도하는 것을 막는 게임이다.</br>
 
