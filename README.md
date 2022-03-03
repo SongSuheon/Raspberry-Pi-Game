@@ -1,22 +1,13 @@
-# Raspberry-Pi-Game
-파이썬을 사용해 Adafruit 1.3" Color TFT Bonnet for Raspberry Pi에서 작동하는 게임 만들기 </br>
+# 게임 이름 : Doge TO The Mars
+<img src="https://user-images.githubusercontent.com/83093525/156487972-6b07fee8-566b-418f-b331-05a29c01fed8.jpg">
+파이썬을 사용해 Adafruit 1.3" Color TFT Bonnet for Raspberry Pi에서 작동하는 게임 만들기 </br>  
+
 플레이 동영상 [[link](https://youtube.com/watch?v=M_NosdPnc04)]
 
-# 게임 이름 : Doge TO The Mars
-<img src="https://user-images.githubusercontent.com/83093525/156487972-6b07fee8-566b-418f-b331-05a29c01fed8.jpg"</a>&nbsp;  
 ## 게임 소개
 플레이어가 일론머스크가 되어 도지코인에 투자했던 개미들이 탈출을 시도하는 것을 막는 게임이다.</br>
-
-하늘에서 떨어지는 도지코인을 획득하면 점수가 증가하고</br>
-
-머스크는 트윗을 날려 사우스 파크 캐릭터를 제거하거나 점프를 해서 피해야 한다.</br>
-
-머스크의 목숨은 총 3개이며 사우스 파크 캐릭터들과 충돌하면 목숨이 하나씩 감소한다. </br>
-
-목숨이 0개가 되면 게임이 종료된다. </br>
-
-점수를 최대한 높게 획득해서 다른 친구와 스코어 점수로 경쟁하는 게임이다.
-</br>
+하늘에서 떨어지는 도지코인을 획득하면 점수가 증가하고 머스크는 트윗을 날려 사우스 파크 캐릭터를 제거하거나 점프를 해서 피해야 한다.</br>
+머스크의 목숨은 총 3개이며 사우스 파크 캐릭터들과 충돌하면 목숨이 하나씩 감소하고 목숨이 0개가 되면 게임이 종료된다. </br>
 ## 시작화면
 아무키나 누르면 게임을 시작한다.
 </br>
